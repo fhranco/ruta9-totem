@@ -75,7 +75,7 @@ export const UpsellDrawer = () => {
                               return (
                                 <button
                                   key={bread}
-                                  onClick={() => addExtraToLastItem({ name: bread, price: 0, type: 'base', id: `B-${bread}` })}
+                                  onClick={() => addExtraToLastItem({ name: bread, price: 0, type: 'extra', id: `B-${bread}` })}
                                   className={`relative bg-black border ${isAdded ? 'border-primary bg-primary/10 shadow-[0_10px_20px_rgba(209,35,43,0.2)]' : 'border-white/10'} rounded-none p-3 flex flex-col items-center gap-2 transition-all active:scale-95`}
                                 >
                                    <span className={`text-[10px] font-black uppercase tracking-tighter ${isAdded ? 'text-white' : 'text-white/40'}`}>{bread}</span>
@@ -99,7 +99,7 @@ export const UpsellDrawer = () => {
                               return (
                                 <button
                                   key={sauce}
-                                  onClick={() => addExtraToLastItem({ name: sauce, price: 0, type: 'sauce', id: `S-${sauce}` })}
+                                  onClick={() => addExtraToLastItem({ name: sauce, price: 0, type: 'extra', id: `S-${sauce}` })}
                                   className={`relative bg-black border ${isAdded ? 'border-primary bg-primary/10 shadow-[0_10px_20px_rgba(209,35,43,0.2)]' : 'border-white/10'} rounded-none p-3 flex flex-col items-center gap-2 transition-all active:scale-95`}
                                 >
                                    <span className={`text-[10px] font-black uppercase tracking-tighter ${isAdded ? 'text-white' : 'text-white/40'}`}>{sauce}</span>
