@@ -14,9 +14,10 @@ interface BurgerCardProps {
   };
   factorySelection?: { bread: string; sauce: string };
   setFactorySelection?: React.Dispatch<React.SetStateAction<{ bread: string; sauce: string }>>;
+  onAdd?: (name: string) => void;
 }
 
-export const BurgerCard = ({ burger, factorySelection, setFactorySelection }: BurgerCardProps) => {
+export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAdd }: BurgerCardProps) => {
   const setActiveProduct = useTray((state) => state.setActiveProduct);
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
