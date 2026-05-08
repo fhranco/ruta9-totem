@@ -76,7 +76,7 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
         <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center mt-0">
            <img 
              ref={imageRef}
-             src={`/images/products/${burger.id.toLowerCase()}.webp`} 
+             src={`/images/products/${burger.id}.webp`} 
              alt={burger.name}
              className="w-full h-full object-contain filter drop-shadow-[0_40px_80px_rgba(0,0,0,1)]"
              onError={(e) => (e.currentTarget.src = "/images/ui/logo.png")}
