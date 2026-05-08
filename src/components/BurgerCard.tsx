@@ -1,189 +1,98 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Plus, Share2, Award, Zap, Check, ChevronUp } from "lucide-react";
+import React, { useEffect, useRef } from "react";
 import { useTray } from "@/store/useTray";
-import { UpsellDrawer } from "./UpsellDrawer";
+import { Zap } from "lucide-react";
+import { gsap } from "gsap";
 
-export const BurgerCard = ({ burger }: { burger: any }) => {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: false, amount: 0.2 });
-  const items = useTray((state) => state.items);
-  const addItem = useTray((state) => state.addItem);
-  const removeProduct = useTray((state) => state.removeProduct);
-  const [showUpsell, setShowUpsell] = useState(false);
-  const [showBalloon, setShowBalloon] = useState(false);
-  const [showInfo, setShowInfo] = useState(false);
-
-  const isAdded = items.some(item => item.product.id === burger.id);
-
-  const handleAddAction = () => {
-    if (isAdded) {
-      removeProduct(burger.id);
-    } else {
-      addItem(burger);
-      // Solo mostrar upsell para burgers o BF, no para bebidas/postres
-      if (burger.id.startsWith("B") || burger.id === "BF") {
-        setShowUpsell(true);
-      }
-      setShowBalloon(true);
-      setTimeout(() => setShowBalloon(false), 3000);
-    }
+interface BurgerCardProps {
+  burger: {
+    id: string;
+    name: string;
+    ingredients: string;
+    price?: number;
+    basePrice?: number;
   };
+  factorySelection?: { bread: string; sauce: string };
+  setFactorySelection?: React.Dispatch<React.SetStateAction<{ bread: string; sauce: string }>>;
+}
+
+export const BurgerCard = ({ burger, factorySelection, setFactorySelection }: BurgerCardProps) => {
+  const setActiveProduct = useTray((state) => state.setActiveProduct);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    // Entrance & Hover Animation
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        y: -15,
+        duration: 2.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+      });
+    }
+
+    // Intersection Observer to detect when this burger is centered
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            setActiveProduct(burger as any);
+          }
+        });
+      },
+      { threshold: [0.5], rootMargin: "-10% 0px -10% 0px" }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [burger, setActiveProduct]);
 
   return (
-    <>
-      <motion.div
-        ref={cardRef}
-        className="relative w-full h-[100dvh] flex flex-col items-center justify-between pt-24 pb-36 px-8 overflow-hidden snap-start"
-      >
-        {/* Clean Background - Glow Removed */}
+    <div 
+      ref={cardRef}
+      className="w-full h-screen h-[100dvh] flex flex-col items-center justify-between pt-[138px] pb-[55vh] px-8 bg-[#0D0D12] text-white border-b border-white/5 relative overflow-hidden group snap-center snap-stop-always"
+    >
+        {/* Background Accent - Larger Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10" />
 
-        {/* Header Info - REWORKED FOR MAX ID VISIBILITY */}
-        <div className="w-full flex flex-col items-center gap-1 z-10 px-4">
-          
-          {/* THE TACTICAL STAMP (v19.0) - Hidden for Factory to lower header */}
-          {burger.id !== "BF" && (
-            <motion.div 
-               initial={{ scale: 0.8, opacity: 0 }}
-               animate={isInView ? { scale: 1, opacity: 1 } : {}}
-               transition={{ type: "spring", stiffness: 200 }}
-               className="bg-primary px-6 py-2 rounded-2xl shadow-[0_20px_40px_rgba(209,35,43,0.6)] border-2 border-white/20 transform -rotate-3 mb-4"
-            >
-               <span className="text-4xl font-black italic text-white tracking-tighter leading-none">
-                  {burger.id}
-               </span>
-            </motion.div>
-          )}
-
-          <div className="relative text-center flex flex-col items-center justify-center w-full px-2 min-h-[60px]">
-            <motion.h2 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              className="text-[1.7rem] sm:text-4xl md:text-5xl font-black italic font-serif text-white relative z-20 tracking-tighter drop-shadow-[0_15px_40px_rgba(0,0,0,0.95)] uppercase text-balance leading-none"
-            >
+        {/* 1. IDENTITY HEADER */}
+        <div className="flex flex-col items-center gap-3 w-full">
+           <div className="bg-primary px-6 py-1.5 rounded-full flex items-center gap-2 shadow-[0_0_30px_rgba(209,35,43,0.4)]">
+              <Zap className="w-4 h-4 text-white animate-pulse" />
+              <span className="text-[13px] font-black uppercase tracking-[0.4em] text-white italic">{burger.id}</span>
+           </div>
+           <h2 className="text-5xl sm:text-7xl font-black uppercase text-center tracking-tighter italic leading-none drop-shadow-2xl max-w-2xl">
               {burger.name}
-            </motion.h2>
-          </div>
+           </h2>
         </div>
 
-        {/* Central Hero Image - MASSIVE SCALE */}
-        <div className="flex-grow w-full flex items-center justify-center relative z-0 my-[-10px] min-h-[35vh]">
-          <motion.div 
-            animate={isInView ? {
-              y: [0, -10, 0],
-              rotate: [0, 2, 0, -2, 0]
-            } : {}}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-full h-[110%] flex items-center justify-center filter drop-shadow-[0_45px_80px_rgba(0,0,0,0.95)]"
-          >
-            <img 
-              src={`/images/products/${burger.id}.webp`} 
-              alt={burger.name}
-              className="w-[120%] h-[120%] sm:w-full sm:h-full max-w-[500px] object-contain transform scale-[1.15] sm:scale-125 pointer-events-none drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-              loading="eager"
-            />
-          </motion.div>
+        {/* 2. HERO IMAGE XXL */}
+        <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center mt-0">
+           <img 
+             ref={imageRef}
+             src={`/images/products/${burger.id.toLowerCase()}.webp`} 
+             alt={burger.name}
+             className="w-full h-full object-contain filter drop-shadow-[0_40px_80px_rgba(0,0,0,1)]"
+             onError={(e) => (e.currentTarget.src = "/images/ui/logo.png")}
+           />
         </div>
 
-        {/* Interaction Footer Area */}
-        <div className="w-full max-w-[500px] flex flex-col gap-8 z-10 relative">
-          
-          {/* Ingredients / Instructions */}
-          <div className="text-center px-6">
-              {burger.id === "BF" ? (
-                 <>
-                   <button 
-                     onClick={() => setShowInfo(true)}
-                     className="text-primary text-sm font-black border border-primary/40 bg-primary/10 px-6 py-2 rounded-full uppercase tracking-widest animate-pulse"
-                   >
-                      Ver Tip de Armado 💡
-                   </button>
-                   
-                   <AnimatePresence>
-                      {showInfo && (
-                        <motion.div 
-                          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-[90%] sm:w-[350px] bg-asphalt border border-white/20 p-6 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] z-[200]"
-                        >
-                           <h4 className="text-primary font-black uppercase tracking-widest text-xs mb-3">🛠️ INSTRUCCIONES RUTA 9</h4>
-                           <p className="text-white text-sm font-medium leading-relaxed drop-shadow-md">
-                              {burger.ingredients}
-                           </p>
-                           <button 
-                             onClick={() => setShowInfo(false)}
-                             className="mt-6 w-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold py-3 rounded-xl uppercase transition-colors"
-                           >
-                              ENTENDIDO
-                           </button>
-                        </motion.div>
-                      )}
-                   </AnimatePresence>
-                 </>
-              ) : (
-                 <p className="text-base sm:text-lg text-snow leading-snug font-bold tracking-wide break-words drop-shadow-md pb-2">
-                   {burger.ingredients}
-                 </p>
-              )}
-          </div>
-
-          {/* Action Pill - PURE PRICE */}
-          <div className="flex items-center justify-between bg-black/60 backdrop-blur-3xl border border-white/20 rounded-full p-2 pl-4 sm:pl-8 shadow-4xl relative overflow-visible group w-full max-w-[95vw] mx-auto">
-            
-            <AnimatePresence>
-              {showBalloon && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, y: -80, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold py-2 px-4 sm:px-8 rounded-2xl whitespace-nowrap shadow-[0_20px_40px_rgba(209,35,43,0.6)] z-[100] border border-white/30"
-                >
-                    ¡AÑADIDA! ¿Vemos un EXTRA? 👇
-                    <div className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-primary rotate-45 border-r border-b border-white/20" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="flex flex-col">
-              <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter drop-shadow-lg leading-none">
-                {burger.price === 0 ? "Consulte" : burger.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
-              </span>
-            </div>
-            
-             <div className="flex gap-2">
-               <button 
-                  onClick={handleAddAction}
-                  className={`${isAdded ? 'bg-green-600 hover:bg-green-500 shadow-[0_15px_35px_rgba(22,163,74,0.4)]' : 'bg-primary hover:bg-[#A32025] shadow-[0_15px_35px_rgba(209,35,43,0.4)]'} text-white font-black h-12 sm:h-16 px-4 sm:px-10 rounded-full flex items-center gap-2 transition-all hover:scale-105 active:scale-95 min-w-[120px] sm:min-w-[160px] justify-center text-[10px] sm:text-sm tracking-widest whitespace-nowrap`}
-               >
-                  {isAdded ? (
-                    <>AGREGADO <Check className="w-4 h-4 sm:w-5 sm:h-5" /></>
-                  ) : (
-                    <>LO QUIERO <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 animate-bounce" /></>
-                  )}
-               </button>
-            </div>
-          </div>
-
-          {/* Indicators */}
-          <div className="flex items-center justify-center gap-6 opacity-40">
-              <div className="flex items-center gap-2">
-                  <Zap className="w-3 h-3 text-primary" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-snow italic">Energía Patagónica</span>
-              </div>
-              <div className="w-1 h-1 rounded-full bg-white/40" />
-              <span className="text-[9px] font-bold uppercase tracking-widest text-snow italic">Ruta 9 Original Chile</span>
-          </div>
+        {/* 3. FOOTER INFO */}
+        <div className="flex flex-col items-center w-full mt-0">
+           <div className="text-center max-w-[500px]">
+              <p className="text-2xl font-black text-white uppercase tracking-tighter leading-tight italic">
+                 {burger.ingredients}
+              </p>
+           </div>
         </div>
-      </motion.div>
 
-      {/* STEP 2: UPSELL DRAWER */}
-      <UpsellDrawer 
-        isOpen={showUpsell} 
-        onClose={() => setShowUpsell(false)} 
-        burgerName={burger.name}
-      />
-    </>
+        {/* Decorative Texture */}
+        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+    </div>
   );
 };

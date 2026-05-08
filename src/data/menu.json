@@ -2,8 +2,13 @@
   "factory": {
     "id": "BF",
     "name": "Burger Factory",
-    "ingredients": "Incluye base, salsa, y extras a elección",
+    "description": "Tu creación, tus reglas. Diseña la Burger definitiva.",
+    "ingredients": "Incluye: Pan Brioche, 180g de Carne Prime, Lechuga, Tomate y 1 Salsa Base.",
     "basePrice": 6700,
+    "options": {
+      "bread": ["Brioche", "Integral", "Sin Gluten"],
+      "sauces": ["Mayonesa Casera", "Ketchup", "Mostaza", "BBQ"]
+    },
     "image": "/images/products/BF.webp"
   },
   "burgers": [
@@ -29,8 +34,18 @@
     { "id": "B20", "name": "Los tres chanchitos", "ingredients": "Burger + queso gouda + tocino + pulled pork + longaniza + salsa BBQ", "price": 12500 },
     { "id": "B21", "name": "La limeña", "ingredients": "Burger + queso crema + ceviche de camarón + mix de ajíes + tortilla de maíz", "price": 10500 },
     { "id": "B22", "name": "Club Veggie", "ingredients": "Burger + queso cheddar + lechuga + tomate + pepinillos + salsa club", "price": 9800 },
-    { "id": "B23", "name": "Burger del mes", "ingredients": "Especial del mes - Consulte disponibilidad", "price": 0 },
     { "id": "B24", "name": "Veggie Thai", "ingredients": "Burger garbanzos + lechuga + champignones + cebolla morada + mix de ajíes y cebollín", "price": 10500 }
+  ],
+  "sandwiches": [
+    { "id": "S1", "name": "TLT", "ingredients": "Tocino + lechuga + tomate", "price": 9200 },
+    { "id": "S2", "name": "THP", "ingredients": "Tocino + huevo frito + palta trozada", "price": 10500 },
+    { "id": "S3", "name": "QTH", "ingredients": "Queso + tomate + huevo", "price": 9900 },
+    { "id": "S4", "name": "Matambre chimichurri", "ingredients": "Matambre tiernizado a la parrilla + queso gouda + chimichurri", "price": 12100 },
+    { "id": "S5", "name": "Matambre a la parrilla", "ingredients": "Matambre tiernizado + queso gouda", "price": 12500 },
+    { "id": "S6", "name": "Brisket ahumada cuatro quesos", "ingredients": "Brisket ahumada + salsa de cuatro quesos premium", "price": 12500 },
+    { "id": "S7", "name": "Sandwich Philly", "ingredients": "Baguette de brisket ahumada + crocante de queso", "price": 12100 },
+    { "id": "S8", "name": "Harley Quinn", "ingredients": "Pan brioche + doble cheddar + doble huevo + tocino + salsa BBQ y sriracha", "price": 8800 },
+    { "id": "S9", "name": "Pulled Pork Gouda", "ingredients": "Pulled pork + queso gouda + pepinillos + huevo frito", "price": 10500 }
   ],
   "snacks": [
     { "id": "K1", "name": "Aros de cebolla apanados (15u.)", "ingredients": "Crujientes al estilo Ruta 9", "price": 5500 },
@@ -40,8 +55,8 @@
     { "id": "K5", "name": "Cóndor wings + salsa (5u.)", "ingredients": "Mostaza miel / BBQ / club / sriracha", "price": 7000 },
     { "id": "K6", "name": "Cóndor wings + salsa (10u.)", "ingredients": "Mostaza miel / BBQ / club / sriracha", "price": 9200 },
     { "id": "K7", "name": "Papas fritas rústicas", "ingredients": "Papas con piel, sal de mar", "price": 5500 },
-    { "id": "K8", "name": "Mix Papas + Aros", "ingredients": "Dúo perfecto rústico y apanado", "price": 5500 },
-    { "id": "K9", "name": "Grand Mix Ruta 9", "": "Bastones + Aros + Papas Rústicas", "price": 7200 },
+    { "id": "K8", "name": "Mix Papas + Aros", "ingredients": "Dúo perfecto rústico y apanado rústicas", "price": 5500 },
+    { "id": "K9", "name": "Grand Mix Ruta 9", "ingredients": "Bastones + Aros + Papas Rústicas", "price": 7200 },
     { "id": "K10", "name": "Papas a la provenzal", "ingredients": "Rústicas + ajo + perejil seleccionado", "price": 6000 },
     { "id": "K11", "name": "Papas con dos huevos", "ingredients": "Fritos o revueltos al gusto", "price": 6000 },
     { "id": "K12", "name": "Papas Cheddar & Tocino", "ingredients": "Salsa cheddar + tocino chips + pepinillos", "price": 6500 },
@@ -53,9 +68,6 @@
     { "id": "K18", "name": "Papas Camarón Vasca", "ingredients": "Papas rústicas + camarones a la vasca", "price": 9500 },
     { "id": "K19", "name": "Papas Brisket & Huevo", "ingredients": "Brisket ternera ahumada + caramelizada + huevo frito", "price": 10500 },
     { "id": "K20", "name": "Papas Hattori Hanzō", "ingredients": "Camarones tocino + queso crema + salsa ginzoo", "price": 9500 }
-  ],
-  "sandwiches": [
-    { "id": "W1", "name": "Club Sandwich de Ruta", "ingredients": "Pollo grillado + tocino + huevo + palta", "price": 9200 }
   ],
   "postres": [
     { "id": "P1", "name": "Affogato", "ingredients": "Bola de helado de vainilla ahogada en espresso", "price": 4500 },

@@ -17,30 +17,39 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Ruta 9 | The Patagonian Burger Experience",
   description: "High-end burger menu and gamified loyalty platform for Ruta 9 Magallanes.",
-  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
+    title: "Ruta 9 Super App",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0D0D12",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es" className="dark scroll-smooth">
-      <body className={`overflow-x-hidden w-full max-w-[100vw] ${spaceGrotesk.variable} ${instrumentSerif.variable} antialiased selection:bg-primary selection:text-white`}>
-        <div className="noise-overlay" />
+    <html lang="es" className="dark">
+      <body className={`bg-[#0D0D12] text-[#FAF9F6] ${spaceGrotesk.variable} ${instrumentSerif.variable} antialiased`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.addEventListener('contextmenu', e => e.preventDefault());
+              document.addEventListener('dragstart', e => e.preventDefault());
+              document.addEventListener('selectstart', e => e.preventDefault());
+            `,
+          }}
+        />
         {children}
       </body>
     </html>

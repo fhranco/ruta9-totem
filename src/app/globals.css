@@ -17,50 +17,57 @@
   --snow: #FAF9F6;
 }
 
-body {
+/* 
+   ESTRUCTURA DE ALTO RENDIMIENTO (MODO TÓTEM v2.5)
+   Usamos scroll-snap dentro del componente MenuExplorer.
+*/
+html, body {
   background-color: var(--asphalt);
   color: var(--snow);
   font-family: var(--font-display);
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  antialiased: true;
 }
 
-/* Glassmorphism Classes */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none; /* Evita que se pueda interactuar con la imagen como objeto del navegador */
+}
+
+/* Glassmorphism Premium */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-red {
-  background: rgba(209, 35, 43, 0.1);
-  backdrop-filter: blur(12px);
+  background: rgba(209, 35, 43, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(209, 35, 43, 0.2);
 }
 
-/* Custom Webkit Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 0px; /* Ocultamos la barra para que parezca una app nativa */
 }
 
-::-webkit-scrollbar-track {
-  background: var(--asphalt);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 10px;
-}
-
-/* Animations */
-@keyframes pulse-red {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(209, 35, 43, 0.7); }
-  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(209, 35, 43, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(209, 35, 43, 0); }
-}
-
-.animate-pulse-red {
-  animation: pulse-red 2s infinite;
+/* High Fidelity Shadows */
+.shadow-4xl {
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 1);
 }
 
 /* Texture Overlay */
@@ -71,7 +78,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.03;
   z-index: 9999;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }

@@ -7,6 +7,7 @@ interface Product {
   tag?: string;
   type?: "burger" | "extra" | "snack" | "sandwich" | "postre" | "drink";
   ingredients?: string;
+  basePrice?: number;
 }
 
 interface TrayItem {
@@ -20,7 +21,9 @@ interface TrayState {
   items: TrayItem[];
   userName: string;
   activeSection: "factory" | "burgers" | "snacks" | "sandwiches" | "postres" | "drinks";
+  activeProduct: Product | null;
   setActiveSection: (section: "factory" | "burgers" | "snacks" | "sandwiches" | "postres" | "drinks") => void;
+  setActiveProduct: (product: Product | null) => void;
   setUserName: (name: string) => void;
   addItem: (product: Product) => void;
   addExtraToLastItem: (extra: Product) => void;
@@ -30,15 +33,20 @@ interface TrayState {
   clearTray: () => void;
   isOpen: boolean;
   toggleTray: () => void;
+  upsell: { isOpen: boolean; burgerName: string };
+  openUpsell: (burgerName: string) => void;
+  closeUpsell: () => void;
 }
 
 export const useTray = create<TrayState>((set) => ({
   items: [],
   userName: "",
   activeSection: "burgers",
+  activeProduct: null,
   isOpen: false,
   
-  setActiveSection: (section) => set({ activeSection: section }),
+  setActiveSection: (section) => set({ activeSection: section, activeProduct: null }),
+  setActiveProduct: (product) => set({ activeProduct: product }),
   setUserName: (name) => set({ userName: name }),
   
   addItem: (product) => 
@@ -90,4 +98,7 @@ export const useTray = create<TrayState>((set) => ({
     
   clearTray: () => set({ items: [], userName: "" }),
   toggleTray: () => set((state) => ({ isOpen: !state.isOpen })),
+  upsell: { isOpen: false, burgerName: "" },
+  openUpsell: (burgerName) => set({ upsell: { isOpen: true, burgerName } }),
+  closeUpsell: () => set((state) => ({ upsell: { ...state.upsell, isOpen: false } })),
 }));

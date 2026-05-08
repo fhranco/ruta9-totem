@@ -28,12 +28,11 @@ export const WelcomeOverlay = () => {
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
            exit={{ opacity: 0 }}
-           className="fixed inset-0 z-[200] bg-asphalt flex items-center justify-center p-8 overflow-hidden"
+           className="fixed inset-0 z-[200] bg-black flex items-center justify-center p-8 overflow-hidden"
         >
-           {/* Cinematic Background */}
-           <div className="absolute inset-0 z-0">
-             <img src="/images/bg/road.jpg" className="w-full h-full object-cover grayscale opacity-30 scale-110" alt="Road" />
-             <div className="absolute inset-0 bg-gradient-to-t from-asphalt via-asphalt/80 to-transparent" />
+           {/* Cinematic Deep Black Background */}
+           <div className="absolute inset-0 z-0 bg-black">
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
            </div>
 
            <div className="relative z-10 w-full max-w-[400px] flex flex-col items-center gap-10">
@@ -43,12 +42,13 @@ export const WelcomeOverlay = () => {
                 animate={{ y: 0, opacity: 1 }}
                 className="flex flex-col items-center gap-4"
               >
-                  <img src="/images/ui/logo.png" className="w-32 h-32 grayscale brightness-200" alt="Logo" />
+                  <img src="/images/ui/logo.png" className="w-40 h-40 grayscale brightness-200 drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]" alt="Logo" />
                   <div className="text-center">
-                    <h1 className="text-sm font-black uppercase tracking-[0.5em] text-primary italic mb-2">PUNTA ARENAS • CHILE</h1>
-                    <h2 className="text-4xl font-black italic text-white tracking-tighter uppercase leading-none">
-                       ¿QUÉ COMERÁS <br /> <span className="text-primary not-italic">HOY?</span>
+                    <h1 className="text-[10px] font-black uppercase tracking-[0.6em] text-primary italic mb-3 opacity-60">MAGALLANES • PATAGONIA</h1>
+                    <h2 className="text-5xl sm:text-6xl font-black italic text-white tracking-tighter uppercase leading-[0.8] font-serif">
+                       THE <span className="text-primary not-italic">SUPER</span> <br /> APP
                     </h2>
+                    <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] mt-6">Ruta 9 Original Experience</p>
                   </div>
               </motion.div>
 
