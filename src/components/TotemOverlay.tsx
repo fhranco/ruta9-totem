@@ -5,9 +5,8 @@ import { Utensils, ShoppingBag } from 'lucide-react';
 export const TotemOverlay = () => {
   const [step, setStep] = useState('attract');
 
-  const handleStart = function(e) {
+  const handleStart = function(e: any) {
     if (e && e.stopPropagation) e.stopPropagation();
-    alert("TOQUE DETECTADO");
     setStep('welcome');
   };
 
