@@ -58,7 +58,7 @@ export const IdleScreen = () => {
             {/* 2. PRODUCT IMAGE (CLEAN) */}
             <div className="relative z-10 w-full max-w-[600px] aspect-square flex items-center justify-center mb-12">
               <img 
-                src={`/images/products/${currentBurger.id}.webp`} 
+                src={`/images/products/${currentBurger.id.toLowerCase()}.webp`} 
                 alt={currentBurger.name}
                 className="w-full h-full object-contain"
               />
