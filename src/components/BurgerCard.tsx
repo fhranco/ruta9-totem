@@ -73,7 +73,7 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
         </div>
 
         {/* 2. HERO IMAGE XXL */}
-        <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center mt-0">
+        <div className={`relative w-full ${burger.id.startsWith('S') ? 'max-w-[650px]' : 'max-w-[500px]'} aspect-square flex items-center justify-center mt-0`}>
            <img 
              ref={imageRef}
              src={`/images/products/${burger.id.toLowerCase()}.webp`} 
