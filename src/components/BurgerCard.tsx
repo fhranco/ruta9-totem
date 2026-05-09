@@ -73,7 +73,7 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
         </div>
 
         {/* 2 & 3. PRODUCT HERO & INFO GROUPED */}
-        <div className="flex flex-col items-center gap-0 -mt-12">
+        <div className="flex flex-col items-center gap-[15px] -mt-12">
             {/* HERO IMAGE XXL */}
             <div className={`relative w-full ${burger.id.startsWith('S') ? 'max-w-[650px]' : 'max-w-[500px]'} aspect-square flex items-center justify-center`}>
                <img 
@@ -86,7 +86,7 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
             </div>
 
             {/* FOOTER INFO */}
-            <div className="flex flex-col items-center w-full -mt-8">
+            <div className="flex flex-col items-center w-full">
                <div className="text-center max-w-[500px]">
                   <p className="text-2xl font-black text-white uppercase tracking-tighter leading-tight italic">
                      {burger.ingredients}
