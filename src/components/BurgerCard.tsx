@@ -56,13 +56,13 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
   return (
     <div 
       ref={cardRef}
-      className="w-full h-screen h-[100dvh] flex flex-col items-center justify-between pt-[138px] pb-[55vh] px-8 bg-[#0D0D12] text-white border-b border-white/5 relative overflow-hidden group snap-center snap-stop-always"
+      className="w-full h-screen h-[100dvh] flex flex-col items-center pt-[138px] pb-[350px] px-8 bg-[#0D0D12] text-white border-b border-white/5 relative overflow-hidden group snap-center snap-stop-always"
     >
         {/* Background Accent - Larger Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10" />
 
         {/* 1. IDENTITY HEADER */}
-        <div className="flex flex-col items-center gap-3 w-full">
+        <div className="flex flex-col items-center gap-3 w-full shrink-0">
            <div className="bg-primary px-6 py-1.5 rounded-full flex items-center gap-2 shadow-[0_0_30px_rgba(209,35,43,0.4)]">
               <Zap className="w-4 h-4 text-white animate-pulse" />
               <span className="text-[13px] font-black uppercase tracking-[0.4em] text-white italic">{burger.id}</span>
@@ -72,9 +72,8 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
            </h2>
         </div>
 
-        {/* 2 & 3. PRODUCT HERO & INFO GROUPED */}
-        <div className="flex flex-col items-center gap-[10px] -mt-12">
-            {/* HERO IMAGE XXL */}
+        {/* 2. HERO IMAGE - Centered in remaining space */}
+        <div className="flex-grow w-full flex items-center justify-center min-h-0">
             <div className={`relative w-full ${burger.id.startsWith('S') ? 'max-w-[650px]' : 'max-w-[500px]'} aspect-square flex items-center justify-center`}>
                <img 
                  ref={imageRef}
@@ -84,15 +83,15 @@ export const BurgerCard = ({ burger, factorySelection, setFactorySelection, onAd
                  onError={(e) => (e.currentTarget.src = "/images/ui/logo.png")}
                />
             </div>
+        </div>
 
-            {/* FOOTER INFO */}
-            <div className="flex flex-col items-center w-full">
-               <div className="text-center max-w-[500px]">
-                  <p className="text-2xl font-black text-white uppercase tracking-tighter leading-tight italic">
-                     {burger.ingredients}
-                  </p>
-               </div>
-            </div>
+        {/* 3. INGREDIENTS - Positioned exactly below image and above button area */}
+        <div className="w-full flex flex-col items-center shrink-0 mt-[10px]">
+           <div className="text-center max-w-[500px]">
+              <p className="text-2xl font-black text-white uppercase tracking-tighter leading-tight italic">
+                 {burger.ingredients}
+              </p>
+           </div>
         </div>
 
         {/* Decorative Texture */}
